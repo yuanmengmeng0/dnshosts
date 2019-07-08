@@ -5,6 +5,7 @@ package com.enorth.dns.dnshosts.controller;/*
  * */
 
 
+import cn.com.enorth.utility.app.web.strutsx.impl.annotations.RequstPath;
 import com.enorth.dns.dnshosts.consts.AllConsts;
 import com.enorth.dns.dnshosts.serviceImpl.AllServiceImpl;
 import com.enorth.dns.dnshosts.serviceImpl.EtcHostServiceImpl;
@@ -270,7 +271,7 @@ public class GroupController {
     /*
     * 导出hosts文件
     * */
-    @RequestMapping(value = "/export")
+    @RequestMapping(value = "/export")  /*第一种*/
     public ResponseEntity<byte[]> export(HttpServletRequest request, HttpServletResponse response) throws IOException {
 //        String path = request.getServletContext().getRealPath("f:/drivers/etc");
         File file=new File("f:/drivers/etc/hosts");
@@ -284,9 +285,21 @@ public class GroupController {
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
                 headers, HttpStatus.CREATED);
 
-
-
-
     }
+    /*@RequestMapping(path = "/export")  *//*第二种*//*
+    public void exportData(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        response.setHeader("content-type", "text/html;charset=UTF-8");
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String( "hosts".getBytes("ISO8859-1"), "utf-8" ) );
+        List<?> hostsData = this.etcHostService.getHostsData();
+        for(Object obj:hostsData){
+            String line=obj.toString();
+            response.getWriter().println(line);
+        }
+        response.getWriter().flush();
+        response.getWriter().close();
+
+    }*/
 
 }
