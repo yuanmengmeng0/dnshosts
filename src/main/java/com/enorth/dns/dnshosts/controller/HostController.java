@@ -140,12 +140,12 @@ public class HostController {
                         this.allService.insertHostLog(list, hvo, svo);
                         /*生成hosts文件*/
                         List<groupVo> listGroup = this.groupService.getAllGroup();
-                        /*boolean create=this.etcHostService.createHost(listGroup);
+                        boolean create=this.etcHostService.createHost(listGroup);
                         if(create){
                             log.info("服务重启开始了");
                             this.etcHostService.LinuxExe();
                             log.info("服务重启结束");
-                        }*/
+                        }
                     }
             } else if (hvo.getIpVersion() == AllConsts.Ipv6) {
                     boolean ipv6 = this.hostService.isIPv6(hvo.getIpAddress());
