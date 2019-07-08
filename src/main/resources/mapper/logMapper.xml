@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enorth.dns.dnshosts.dao.logDao">
+    <resultMap id="groupResultMap" type="com.enorth.dns.dnshosts.vo.groupVo">
+        <id column="log_id" property="logId" jdbcType="INTEGER"/>
+        <result column="log_date" property="logDate" javaType="date"/>
+        <result column="object_type" property="objectType" jdbcType="VARCHAR"/>
+        <result column="object_id" property="objectId" jdbcType="INTEGER"/>
+        <result column="log_detail" property="logDetail" javaType="String"/>
+        <result column="mod_user_id" property="modUserId" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="insertLog" parameterType="com.enorth.dns.dnshosts.vo.sysLogVo">
+        insert into t_sys_log (log_id,log_date,object_type,object_id,log_detail,mod_user_id)
+        values (#{logId},#{logDate},#{objectType},#{objectId},#{logDetail},#{modUserId});
+    </insert>
+</mapper>

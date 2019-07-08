@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enorth.dns.dnshosts.dao.hostDao">
+    <resultMap id="hostResultMap" type="com.enorth.dns.dnshosts.vo.hostsVo">
+        <id column="hosts_id" property="hostsId" jdbcType="INTEGER"/>
+        <result column="group_id" property="groupId" jdbcType="INTEGER"/>
+        <result column="ip_version" property="ipVersion" jdbcType="INTEGER"/>
+        <result column="ip_address" property="ipAddress" jdbcType="VARCHAR"/>
+        <result column="host_names" property="hostNames" jdbcType="VARCHAR"/>
+        <result column="memo" property="memo" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="list_order" property="listOrder" jdbcType="INTEGER"/>
+        <result column="mod_user_id" property="modUserId" jdbcType="VARCHAR"/>
+        <result column="mod_user_name" property="modUserName" jdbcType="VARCHAR"/>
+        <result column="mod_date" property="modDate" javaType="date"/>
+        <!--<association property="com.dns.dnshosts.vo.groupVo" javaType="com.dns.dnshosts.vo.groupVo">
+            <result column="group_id" property="groupId" jdbcType="INTEGER"/>
+        </association>-->
+    </resultMap>
+    <!--添加-->
+    <insert id="insertHost" parameterType="com.enorth.dns.dnshosts.vo.hostsVo">
+        insert into t_hosts (hosts_id,group_id,ip_version,ip_address,host_names,memo,state,list_order,mod_user_id,mod_user_name,mod_date)
+        values (#{hostsId},#{groupId},#{ipVersion},#{ipAddress},#{hostNames},#{memo},#{state},#{listOrder},#{modUserId},#{modUserName},#{modDate});
+    </insert>
+    <!--查询所有-->
+    <select id="getAllhosts" resultMap="hostResultMap">
+        select * from t_hosts where state >-1 and group_id=#{var1} order by list_order;
+    </select>
+    <!--id获取数据-->
+    <select id="getHostById" resultMap="hostResultMap">
+        select * from t_hosts where hosts_id =#{hostsId};
+    </select>
+    <!--模糊查询-->
+    <select id="getLikeHost" resultMap="hostResultMap">
+        select * from t_hosts
+         <where>
+
+             <if test="ipAddress !=null and ipAddress != '' ">
+                 and group_id=${groupId} and state > -1 and ip_address like '%${ipAddress}%' order by list_order
+             </if>
+             <if test="hostNames !=null and hostNames != '' ">
+                 and group_id=${groupId} and state > -1 and host_names like '%${hostNames}%' order by list_order
+             </if>
+         </where>
+        /* where group_id=${groupId} and ip_address like '%${ipAddress}%';*/
+    </select>
+    <!--禁用/启用-->
+    <update id="isOpen" parameterType="com.enorth.dns.dnshosts.vo.hostsVo">
+        update t_hosts set state= #{state},mod_user_id=#{modUserId},mod_user_name=#{modUserName},mod_date=#{modDate} where hosts_id =#{hostsId};
+    </update>
+    <!--删除-->
+    <update id="delHost" parameterType="com.enorth.dns.dnshosts.vo.hostsVo">
+        update t_hosts set state = -1,mod_user_id=${modUserId},mod_user_name=#{modUserName},mod_date=#{modDate} where hosts_id=#{hostsId};
+    </update>
+    <!--修改-->
+    <update id="modifyHost" parameterType="com.enorth.dns.dnshosts.vo.hostsVo">
+        update t_hosts set ip_version=#{ipVersion},ip_address=#{ipAddress},host_names=#{hostNames},
+        state= #{state},memo=#{memo},mod_user_id=${modUserId},mod_user_name=#{modUserName},mod_date=#{modDate} where hosts_id =#{hostsId};
+    </update>
+</mapper>

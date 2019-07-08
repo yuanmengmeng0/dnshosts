@@ -1,0 +1,38 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /dnshosts/
+spring:
+  datasource:
+    url: jdbc:mysql://10.0.251.50:3306/ymm_hosts_0617?serverTimezone=GMT%2B8
+    username: root
+    password: 1234qwer
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    static-path-pattern: /**
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+      cache: false
+  resources:
+    static-locations: classpath:/static/
+  devtools:
+    restart:
+      enabled: true
+      exclude: webapp/**
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  level:
+    com.dns.dnshosts.mapper: debug
+    root: info
+    org.mybatis: debug
+    java.sql: debug
+    org.springframework.web: trace
+    mysql: debug
+  path:
+    config: classpath:config/logging.xml
+
+

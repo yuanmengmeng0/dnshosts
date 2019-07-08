@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enorth.dns.dnshosts.dao.CommonDao">
+
+    <select id="getNextVal" resultType="int">
+        select nextval('${name}');
+    </select>
+</mapper>
