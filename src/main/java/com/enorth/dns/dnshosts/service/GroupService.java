@@ -6,6 +6,7 @@ package com.enorth.dns.dnshosts.service;/*
 
 
 
+import com.enorth.dns.dnshosts.vo.Page;
 import com.enorth.dns.dnshosts.vo.groupVo;
 
 import java.util.List;
@@ -18,4 +19,5 @@ public interface GroupService {
     void updateGroup(groupVo vo)throws  Exception;
     void modifyGroup(groupVo groupVo)throws  Exception;
     List<groupVo> getLikeGroup(groupVo groupVo) throws Exception;
+    Page<groupVo> getLikeGroups(groupVo vo,Page<groupVo> page) throws Exception;
 }

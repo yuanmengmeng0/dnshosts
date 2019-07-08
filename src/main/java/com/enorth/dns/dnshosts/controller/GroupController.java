@@ -58,7 +58,13 @@ public class GroupController {
     @RequestMapping("/showGroup")
     public String showGroup(HttpServletRequest request) throws Exception {
         String gname=request.getParameter("groName");
+        String pageNo=null;
+        pageNo=request.getParameter("pageNo");
+        if(StringUtils.isEmpty(pageNo)){
+            pageNo = "1";
+        }
         Page<groupVo> page= new Page<>();
+        page.setPageNo(Integer.valueOf(pageNo));
         groupVo vo=new groupVo();
         vo.setGroupName(gname);
         /*为了显示查询条件*/
@@ -70,7 +76,8 @@ public class GroupController {
             page = this.groupService.getGroups(page);
         }else{
             /*模糊查询*/
-            list=this.groupService.getLikeGroup(vo);
+//            list=this.groupService.getLikeGroup(vo);
+            page=this.groupService.getLikeGroups(vo,page);
         }
          request.setAttribute("groupVo",page);
         return "mainGroup";
@@ -140,10 +147,8 @@ public class GroupController {
      * 修改组
      **/
     @RequestMapping(value = "/groupModify",method = RequestMethod.POST)
-    public String modifyGroup(HttpServletRequest request, HttpServletResponse response, groupVo gvo) throws Exception {
+    public String modifyGroup(HttpServletRequest request, HttpServletResponse response, groupVo gvo,Page<groupVo> page) throws Exception {
         //准备数据  开始
-
-
         gvo.setModUserId("11");
         gvo.setModUserName("uuu");
         gvo.setModDate(new Date());
@@ -172,12 +177,12 @@ public class GroupController {
             this.allService.modifyGroupLog(gvo, svo);
            // 生成hosts文件
             List<groupVo> listGroup = this.groupService.getAllGroup();
-            boolean create=this.etcHostService.createHost(listGroup);
+          /*  boolean create=this.etcHostService.createHost(listGroup);
             if(create){
                 log.info("服务重启开始了");
                 this.etcHostService.LinuxExe();
                 log.info("服务重启结束");
-            }
+            }*/
         }
         return "redirect:/showGroup";
     }

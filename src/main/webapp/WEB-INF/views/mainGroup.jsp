@@ -18,6 +18,9 @@
         tr th{
             text-align: center;
         }
+        .center{
+            text-align:center!important
+        }
     </style>
 </head>
 <body>
@@ -75,6 +78,36 @@
         </c:forEach>
         </tbody>
     </table>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="center" id="dynamic-table_paginate">
+                <ul class="pagination">
+                    <li><a href="javascript:void(0);" onclick="demand('1')">&laquo;&laquo;</a></li>
+                    <c:if test="${groupVo.pageNo==1}">
+                        <li class="disabled"><a href="javascript:void(0);">&laquo;</a></li>
+                    </c:if>
+                    <c:if test="${groupVo.pageNo!=1}">
+                        <li><a href="javascript:void(0);" onclick="demand('${groupVo.pageNo-1}')">&laquo;</a></li>
+                    </c:if>
+                    <c:forEach items="${groupVo.pageNos}" var="pno">
+                        <c:if test="${pno == groupVo.pageNo}">
+                            <li class="active"><a href="javascript:void(0);" onclick="demand('${pno}')">${pno}</a></li>
+                        </c:if>
+                        <c:if test="${pno != groupVo.pageNo}">
+                            <li><a href="javascript:void(0);" onclick="demand('${pno}')">${pno}</a></li>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${groupVo.pageNo>=groupVo.totalPage}">
+                        <li class="disabled"><a href="javascript:void(0);">&raquo;</a></li>
+                    </c:if>
+                    <c:if test="${groupVo.pageNo<groupVo.totalPage}">
+                        <li><a href="javascript:void(0);" onclick="demand('${groupVo.pageNo+1}')">&raquo;</a></li>
+                    </c:if>
+                    <li><a href="javascript:void(0);" onclick="demand('${groupVo.totalPage}')">&raquo;&raquo;</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -166,6 +199,7 @@
                 <div class="modal-footer" style="text-align: center">
                     <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
                     <input type="hidden" value="" name="groupId" id="id1">
+                    <input type="hidden" value="${param.get('pageNo')}" name="pageNo">
                     <input type="button" value="保存" class="btn btn-primary" onclick="sub1();"/>
                 </div>
             </form>
@@ -174,9 +208,12 @@
 </div>
 </body>
 <script type="text/javascript">
+    function demand(pageNo) {
+        window.location.href="/dnshosts/showGroup?pageNo="+pageNo+"&groName=${param.get('groName')}";
+    }
     function select() {
         var gname=$("input[name='groName']").val();
-        window.location.href="/dnshosts/showGroup?groName="+gname;
+        window.location.href="/dnshosts/showGroup?groName="+gname+"&pageNo=";
         /*$.ajax({
             url:"/dnshosts/showGroup",
             type:"post",

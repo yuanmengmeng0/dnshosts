@@ -14,8 +14,9 @@
     <select id="getAllGroup" resultMap="groupResultMap">
         select * from t_group where state > -1 order by list_order;
     </select>
+    <!--分页查询-->
     <select id="getGroups" resultMap="groupResultMap">
-        select * from t_group where state > -1 order by list_order limit ${pageNo},${pageSize};
+        select * from t_group where state > -1 order by list_order limit ${startData},${pageSize};
     </select>
     <!--id获取数据-->
     <select id="getGroupById" resultMap="groupResultMap">
@@ -23,7 +24,10 @@
     </select>
     <!--模糊查询-->
     <select id="getLikeGroup" resultMap="groupResultMap">
-        select  * from t_group where group_name like '%${groupName}%' order by list_order;
+        select  * from t_group where state > #{state} and group_name like '%${groupName}%' order by list_order;
+    </select>
+    <select id="getLikeGroups" resultMap="groupResultMap">
+        select  * from t_group where state > #{state} and group_name like '%${groupname}%' order by list_order limit ${startData},${pageSize};
     </select>
     <insert id="insertGroup" parameterType="com.enorth.dns.dnshosts.vo.groupVo">
         insert into t_group (group_id,group_name,list_order,state,mod_user_id,mod_user_name,mod_date)

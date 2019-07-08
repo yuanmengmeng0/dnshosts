@@ -9,6 +9,7 @@ import com.enorth.dns.dnshosts.vo.Page;
 import com.enorth.dns.dnshosts.vo.groupVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface groupDao {
     List<groupVo> getAllGroup();
@@ -20,4 +21,5 @@ public interface groupDao {
     void updateGroup(groupVo vo);
     void modifyGroup(groupVo vo);
     List<groupVo> getLikeGroup(groupVo groupVo);
+    List<groupVo> getLikeGroups(Map<String,Object> map);
 }

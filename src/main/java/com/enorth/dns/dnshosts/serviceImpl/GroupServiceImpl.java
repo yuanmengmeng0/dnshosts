@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Transactional
 @Service
@@ -39,10 +41,12 @@ public class GroupServiceImpl implements GroupService {
     /*
     * 分页
     * */
-    public Page<groupVo> getGroups(Page<groupVo> page){
+    public Page<groupVo> getGroups(Page<groupVo> page) throws Exception {
         Page<groupVo> pages = new Page<>();
         List<groupVo> list = this.groupDao.getGroups(page);
+        pages.setPageNo(page.getPageNo());
         pages.setResults(list);
+        pages.setTotalRecord(this.getAllGroup().size());
         return pages;
     }
 
@@ -76,7 +80,25 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<groupVo> getLikeGroup(groupVo groupVo) throws Exception {
         List<com.enorth.dns.dnshosts.vo.groupVo> list=new ArrayList<>();
+        groupVo.setState(-1);
         list=this.groupDao.getLikeGroup(groupVo);
         return list;
+    }
+    /*模糊查询分页*/
+    @Override
+    public Page<groupVo> getLikeGroups(groupVo groupVo,Page<groupVo> page) throws Exception {
+        Page<groupVo> pages = new Page<>();
+        List<groupVo> list=new ArrayList<>();
+        groupVo.setState(-1);
+        Map<String,Object> map=new HashMap<>();
+        map.put("state",groupVo.getState());
+        map.put("groupname",groupVo.getGroupName());
+        map.put("startData",page.getStartData());
+        map.put("pageSize",page.getPageSize());
+        list=this.groupDao.getLikeGroups(map);
+        pages.setPageNo(page.getPageNo());
+        pages.setResults(list);
+        pages.setTotalRecord(this.getLikeGroup(groupVo).size());
+        return pages;
     }
 }
