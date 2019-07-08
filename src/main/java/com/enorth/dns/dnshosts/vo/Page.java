@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Page<T> {
     private int pageNo = 1;//页码，默认第一页
-    private int pageSize = 3; //每页显示的记录数  默认5
+    private int pageSize = 10; //每页显示的记录数  默认5
     private int totalRecord; //总记录数
     private int totalPage;  //总页数
     private Integer[] pageNos; //显示的页码

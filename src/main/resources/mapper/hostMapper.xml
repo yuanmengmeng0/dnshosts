@@ -26,6 +26,10 @@
     <select id="getAllhosts" resultMap="hostResultMap">
         select * from t_hosts where state >-1 and group_id=#{var1} order by list_order;
     </select>
+    <!--分页-->
+    <select id="getAllhost" resultMap="hostResultMap">
+        select * from t_hosts where state >-1 and group_id=#{groupId} order by list_order limit #{startData},#{pageSize};
+    </select>
     <!--id获取数据-->
     <select id="getHostById" resultMap="hostResultMap">
         select * from t_hosts where hosts_id =#{hostsId};
@@ -34,15 +38,29 @@
     <select id="getLikeHost" resultMap="hostResultMap">
         select * from t_hosts
          <where>
-
+             group_id=${groupId} and state > -1
              <if test="ipAddress !=null and ipAddress != '' ">
-                 and group_id=${groupId} and state > -1 and ip_address like '%${ipAddress}%' order by list_order
+                 and ip_address like '%${ipAddress}%'
              </if>
              <if test="hostNames !=null and hostNames != '' ">
-                 and group_id=${groupId} and state > -1 and host_names like '%${hostNames}%' order by list_order
+                and host_names like '%${hostNames}%'
              </if>
          </where>
-        /* where group_id=${groupId} and ip_address like '%${ipAddress}%';*/
+        order by list_order
+    </select>
+    <!--模糊查询分页-->
+    <select id="getLikeHosts" resultMap="hostResultMap">
+        select * from t_hosts
+        <where>
+            group_id=${groupId} and state > ${state}
+            <if test="ipAddress !=null and ipAddress != '' ">
+                 and ip_address like '%${ipAddress}%'
+            </if>
+            <if test="hostNames !=null and hostNames != '' ">
+              and host_names like '%${hostNames}%'
+            </if>
+        </where>
+        order by list_order limit ${startData},${pageSize}
     </select>
     <!--禁用/启用-->
     <update id="isOpen" parameterType="com.enorth.dns.dnshosts.vo.hostsVo">

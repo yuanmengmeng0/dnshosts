@@ -7,6 +7,7 @@ package com.enorth.dns.dnshosts.controller;/*
 
 import com.enorth.dns.dnshosts.consts.AllConsts;
 import com.enorth.dns.dnshosts.serviceImpl.*;
+import com.enorth.dns.dnshosts.vo.Page;
 import com.enorth.dns.dnshosts.vo.groupVo;
 import com.enorth.dns.dnshosts.vo.hostsVo;
 import com.enorth.dns.dnshosts.vo.sysLogVo;
@@ -53,12 +54,22 @@ public class HostController {
         boolean hostname=StringUtils.isEmpty(vo.getHostNames());
         /*为了保留查询条件*/
         request.setAttribute("vo",vo);
-        if(address && hostname){
-            list = this.hostService.getAllHosts(vo.getGroupId());
-        }else {
-           list=this.hostService.getLikeHost(vo);
+
+        String pageNo=null;
+        pageNo=request.getParameter("pageNo");
+        if(StringUtils.isEmpty(pageNo)){
+            pageNo = "1";
         }
-        request.setAttribute("hosts",list);
+        Page<hostsVo> page= new Page<>();
+        page.setPageNo(Integer.valueOf(pageNo));
+        if(address && hostname){
+//            list = this.hostService.getAllHosts(vo.getGroupId());
+            page=this.hostService.getAllHost(page,vo.getGroupId());
+        }else {
+//           list=this.hostService.getLikeHost(vo);
+           page=this.hostService.getLikeHosts(vo,page);
+        }
+        request.setAttribute("hosts",page);
         return "analysis";
     }
     /*
@@ -129,12 +140,12 @@ public class HostController {
                         this.allService.insertHostLog(list, hvo, svo);
                         /*生成hosts文件*/
                         List<groupVo> listGroup = this.groupService.getAllGroup();
-                        boolean create=this.etcHostService.createHost(listGroup);
+                        /*boolean create=this.etcHostService.createHost(listGroup);
                         if(create){
                             log.info("服务重启开始了");
                             this.etcHostService.LinuxExe();
                             log.info("服务重启结束");
-                        }
+                        }*/
                     }
             } else if (hvo.getIpVersion() == AllConsts.Ipv6) {
                     boolean ipv6 = this.hostService.isIPv6(hvo.getIpAddress());

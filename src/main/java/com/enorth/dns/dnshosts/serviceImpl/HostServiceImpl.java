@@ -7,6 +7,7 @@ package com.enorth.dns.dnshosts.serviceImpl;/*
 
 import com.enorth.dns.dnshosts.dao.hostDao;
 import com.enorth.dns.dnshosts.service.HostService;
+import com.enorth.dns.dnshosts.vo.Page;
 import com.enorth.dns.dnshosts.vo.hostsVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @Transactional
@@ -41,6 +44,21 @@ public class HostServiceImpl implements HostService {
         List<hostsVo> list=new ArrayList<>();
         list=this.hostDao.getAllhosts(groupId);
         return list;
+    }
+    /*分页查询*/
+    @Override
+    public Page<hostsVo> getAllHost(Page<hostsVo> page,int groupId) throws Exception {
+        Page<hostsVo> pages=new Page<>();
+        List<hostsVo> list=new ArrayList<>();
+        Map<String,Object> map= new HashMap<>();
+        map.put("startData",page.getStartData());
+        map.put("pageSize",page.getPageSize());
+        map.put("groupId",groupId);
+        list=this.hostDao.getAllhost(map);
+        pages.setPageNo(page.getPageNo());
+        pages.setResults(list);
+        pages.setTotalRecord(this.getAllHosts(groupId).size());
+        return pages;
     }
 
     /*
@@ -82,6 +100,23 @@ public class HostServiceImpl implements HostService {
         List<hostsVo> list=new ArrayList<>();
         list=this.hostDao.getLikeHost(vo);
         return list;
+    }
+    @Override
+    public Page<hostsVo> getLikeHosts(hostsVo vo,Page<hostsVo> page) throws Exception {
+        Page<hostsVo> pages = new Page<>();
+        Map<String,Object> map=new HashMap<>();
+        List<hostsVo> list=new ArrayList<>();
+        map.put("groupId",vo.getGroupId());
+        map.put("state",-1);
+        map.put("ipAddress",vo.getIpAddress());
+        map.put("hostNames",vo.getHostNames());
+        map.put("startData",page.getStartData());
+        map.put("pageSize",page.getPageSize());
+        list=this.hostDao.getLikeHosts(map);
+        pages.setResults(list);
+        pages.setPageNo(page.getPageNo());
+        pages.setTotalRecord(this.getLikeHost(vo).size());
+        return pages;
     }
 
     /*验证IPV4的ip合法性*/

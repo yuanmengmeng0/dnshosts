@@ -18,6 +18,9 @@
         tr th{
             text-align: center;
         }
+        .center{
+            text-align: center !important;
+        }
     </style>
 </head>
 <body>
@@ -53,7 +56,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${hosts}" var="vo">
+        <c:forEach items="${hosts.results}" var="vo">
         <tr style="text-align: center;">
             <td>${vo.hostsId}</td>
             <td>${vo.groupId}</td>
@@ -85,6 +88,36 @@
         </c:forEach>
         </tbody>
     </table>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="center" id="dynamic-table_paginate">
+                <ul class="pagination">
+                    <li><a href="javascript:void(0);" onclick="demand('1')">&laquo;&laquo;</a></li>
+                    <c:if test="${hosts.pageNo==1}">
+                        <li class="disabled"><a href="javascript:void(0);">&laquo;</a></li>
+                    </c:if>
+                    <c:if test="${hosts.pageNo!=1}">
+                        <li><a href="javascript:void(0);" onclick="demand('${hosts.pageNo-1}')">&laquo;</a></li>
+                    </c:if>
+                    <c:forEach items="${hosts.pageNos}" var="pno">
+                        <c:if test="${pno == hosts.pageNo}">
+                            <li class="active"><a href="javascript:void(0);" onclick="demand('${pno}')">${pno}</a></li>
+                        </c:if>
+                        <c:if test="${pno != hosts.pageNo}">
+                            <li><a href="javascript:void(0);" onclick="demand('${pno}')">${pno}</a></li>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${hosts.pageNo>=hosts.totalPage}">
+                        <li class="disabled"><a href="javascript:void(0);">&raquo;</a></li>
+                    </c:if>
+                    <c:if test="${hosts.pageNo<hosts.totalPage}">
+                        <li><a href="javascript:void(0);" onclick="demand('${hosts.pageNo+1}')">&raquo;</a></li>
+                    </c:if>
+                    <li><a href="javascript:void(0);" onclick="demand('${hosts.totalPage}')">&raquo;&raquo;</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -267,6 +300,11 @@
          $("#groId").val(str);
     });
 
+    function demand(pageNo) {
+        window.location.href="/dnshosts/showAnalysis?groupId=${param.get('groupId')}&pageNo="+pageNo+
+            "&ipAddress=${param.get('ipAddress')}&hostNames=${param.get('hostNames')}";
+    }
+
     /*保存导入的数据*/
     function importSub() {
         var ipHost=$("#importHost").val();
@@ -345,7 +383,7 @@
             },
             success:function (data) {
                 if(data.code == 1){
-                    window.location.href="/dnshosts/showAnalysis?groupId="+groId+"&ipAddress=&hostNames=";
+                    window.location.href="/dnshosts/showAnalysis?groupId="+groId+"&ipAddress=${param.get('ipAddress')}&hostNames=${param.get('hostNames')}"+"&pageNo=${param.get('pageNo')}";
                 }else{
                     alert(data.mes);
                 }
