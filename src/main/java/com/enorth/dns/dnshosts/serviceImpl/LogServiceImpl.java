@@ -7,6 +7,7 @@ package com.enorth.dns.dnshosts.serviceImpl;/*
 
 import com.enorth.dns.dnshosts.dao.logDao;
 import com.enorth.dns.dnshosts.service.LogService;
+import com.enorth.dns.dnshosts.vo.Page;
 import com.enorth.dns.dnshosts.vo.sysLogVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Transactional
 @Service
@@ -26,6 +29,24 @@ public class LogServiceImpl implements LogService {
     @Override
     public void insertLog(sysLogVo vo) throws Exception {
         this.logDao.insertLog(vo);
+    }
+
+    @Override
+    public List<sysLogVo> getAllLog() throws Exception {
+        List<sysLogVo> list=new ArrayList<>();
+        list=this.logDao.getAllLog();
+        return list;
+    }
+
+    @Override
+    public Page<sysLogVo> getAllLogs(Page<sysLogVo> page) throws Exception {
+        List<sysLogVo> list=new ArrayList<>();
+        list=this.logDao.getAllLogs(page);
+        Page<sysLogVo> pages = new Page<>();
+        pages.setPageNo(page.getPageNo());
+        pages.setResults(list);
+        pages.setTotalRecord(this.getAllLog().size());
+        return pages;
     }
 
     public sysLogVo message(String type, int objectId, String modUserId){

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.enorth.dns.dnshosts.dao.logDao">
-    <resultMap id="groupResultMap" type="com.enorth.dns.dnshosts.vo.groupVo">
+    <resultMap id="groupResultMap" type="com.enorth.dns.dnshosts.vo.sysLogVo">
         <id column="log_id" property="logId" jdbcType="INTEGER"/>
         <result column="log_date" property="logDate" javaType="date"/>
         <result column="object_type" property="objectType" jdbcType="VARCHAR"/>
@@ -13,4 +13,10 @@
         insert into t_sys_log (log_id,log_date,object_type,object_id,log_detail,mod_user_id)
         values (#{logId},#{logDate},#{objectType},#{objectId},#{logDetail},#{modUserId});
     </insert>
+    <select id="getAllLog" resultMap="groupResultMap">
+        select * from t_sys_log order by log_id
+    </select>
+    <select id="getAllLogs" resultMap="groupResultMap">
+        select * from t_sys_log order by log_id limit ${startData},${pageSize}
+    </select>
 </mapper>

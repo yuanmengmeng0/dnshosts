@@ -5,8 +5,13 @@ package com.enorth.dns.dnshosts.dao;/*
  * */
 
 
+import com.enorth.dns.dnshosts.vo.Page;
 import com.enorth.dns.dnshosts.vo.sysLogVo;
+
+import java.util.List;
 
 public interface logDao {
     void insertLog(sysLogVo vo);
+    List<sysLogVo> getAllLog();
+    List<sysLogVo> getAllLogs(Page<sysLogVo> page);
 }

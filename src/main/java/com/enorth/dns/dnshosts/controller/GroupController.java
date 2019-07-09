@@ -137,7 +137,7 @@ public class GroupController {
             boolean create=this.etcHostService.createHost(listGroup);
             if(create){
                 log.info("服务重启开始了");
-                this.etcHostService.LinuxExe();
+//                this.etcHostService.LinuxExe();
                 log.info("服务重启结束");
             }
         }
@@ -181,7 +181,7 @@ public class GroupController {
             boolean create=this.etcHostService.createHost(listGroup);
             if(create){
                 log.info("服务重启开始了");
-                this.etcHostService.LinuxExe();
+//                this.etcHostService.LinuxExe();
                 log.info("服务重启结束");
             }
         }
@@ -213,7 +213,7 @@ public class GroupController {
             boolean create=this.etcHostService.createHost(listGroup);
             if(create){
                 log.info("服务重启开始了");
-                this.etcHostService.LinuxExe();
+//                this.etcHostService.LinuxExe();
                 log.info("服务重启结束");
             }
         } catch (Exception e) {
@@ -256,7 +256,7 @@ public class GroupController {
             boolean create=this.etcHostService.createHost(listGroup);
             if(create){
                 log.info("服务重启开始了");
-                this.etcHostService.LinuxExe();
+//                this.etcHostService.LinuxExe();
                 log.info("服务重启结束");
             }
             json.put("code",1);

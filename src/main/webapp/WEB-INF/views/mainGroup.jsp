@@ -32,6 +32,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">创建组</button>
 
                   <a href="/dnshosts/export"><button type="button" class="btn btn-primary"> 导出hosts文件 </button></a>
+                  <a href="/dnshosts/showLog"><button type="button" class="btn btn-primary">日志管理</button></a>
 
                 <form class="form-inline" role="form" style="float: right;margin-right: 80em;">
                     <input type="text" class="form-control" name="groName" placeholder="组名称" value="${vo.groupName}">
