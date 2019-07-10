@@ -8,6 +8,7 @@ package com.enorth.dns.dnshosts.serviceImpl;/*
 import com.enorth.dns.dnshosts.dao.logDao;
 import com.enorth.dns.dnshosts.service.LogService;
 import com.enorth.dns.dnshosts.vo.Page;
+import com.enorth.dns.dnshosts.vo.base.PhotoVo;
 import com.enorth.dns.dnshosts.vo.sysLogVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,5 +57,17 @@ public class LogServiceImpl implements LogService {
         svo.setObjectId(objectId);
         svo.setModUserId(modUserId);
         return svo;
+    }
+
+    public void insertPhoto(sysLogVo vo) {
+        for(PhotoVo photoVo:vo.getPhotos()){
+            this.logDao.insertPhoto(photoVo);
+        }
+    }
+
+    public List<PhotoVo> getPhotos() {
+        List<PhotoVo> list=new ArrayList<>();
+        list = this.logDao.getPhotos();
+        return list;
     }
 }

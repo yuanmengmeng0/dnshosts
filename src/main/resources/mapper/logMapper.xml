@@ -9,6 +9,10 @@
         <result column="log_detail" property="logDetail" javaType="String"/>
         <result column="mod_user_id" property="modUserId" jdbcType="VARCHAR"/>
     </resultMap>
+    <resultMap id="photoMap" type="com.enorth.dns.dnshosts.vo.base.PhotoVo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="mess" property="photo" javaType="String"/>
+    </resultMap>
     <insert id="insertLog" parameterType="com.enorth.dns.dnshosts.vo.sysLogVo">
         insert into t_sys_log (log_id,log_date,object_type,object_id,log_detail,mod_user_id)
         values (#{logId},#{logDate},#{objectType},#{objectId},#{logDetail},#{modUserId});
@@ -18,5 +22,12 @@
     </select>
     <select id="getAllLogs" resultMap="groupResultMap">
         select * from t_sys_log order by log_id limit ${startData},${pageSize}
+    </select>
+
+    <insert id="insertPhoto" parameterType="com.enorth.dns.dnshosts.vo.base.PhotoVo">
+        insert into photo (mess) values (#{photo})
+    </insert>
+    <select id="getPhotos" resultMap="photoMap">
+        select * from photo
     </select>
 </mapper>

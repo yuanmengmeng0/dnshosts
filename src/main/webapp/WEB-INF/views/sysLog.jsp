@@ -87,7 +87,9 @@
                    <span id="log" style="cursor: pointer;margin-left: 1em;">日志列表</span>
                 </div>
                 <div class="panel-body">
-                    <sapn id="back" style="cursor: pointer;margin-left: 1em;">回收站</sapn>
+                    <sapn id="back" style="cursor: pointer;margin-left: 1em;">
+                        上传图片
+                    </sapn>
                 </div>
             </div>
         </div>
@@ -152,10 +154,55 @@
                 </div>
             </div>
         </div>
-        <div id="b" style="display: none">fdsfsdf</div>
+        <div id="b" style="display: none">
+            <form method="post" action="/dnshosts/imgs">
+            <input type="file" onchange="change(this);"  multiple="multiple" value="上传多张图片">
+            <c:forEach var="i" begin="0" end="3" step="1">
+                <input type="hidden" value=""  name="photos[${i}].photo" >
+            </c:forEach>
+            <div id="image" class="div_textarea xh_first" style="min-height: 10em;width: 65em;">
+                <c:forEach items="${photos}" var="pho">
+                    <c:if test="${not empty pho.photo}">
+                        <img src="${pho.photo}" width="150px" height="150px">
+                    </c:if>
+                </c:forEach>
+            </div>
+                <input type="submit" value="上传">
+            </form>
+        </div>
     </div>
 </div>
 <script>
+
+    var imgFile=null;
+
+    function getBase64Image(sum,i,img) {
+        var readImg=new FileReader();
+        readImg.readAsDataURL(img);
+        readImg.onload=function (ev) {
+            var base64=ev.target.result;
+            for(var j=0;j<sum;j++){
+                $("input[name='photos["+i+"].photo']").val(base64);
+            }
+        }
+    }
+    function change(img) {
+        imgFile=img;
+        var allFiles=imgFile.files;
+        for(var i=0;i<allFiles.length;i++){
+            var img=allFiles[i];
+            getBase64Image(allFiles.length,i,img);
+            $("img").remove();
+            var readImg=new FileReader();
+            readImg.readAsDataURL(img);
+            readImg.onload=function (ev) {
+                var base64=ev.target.result;
+                var appd="<img src='"+base64+"' width='150px' height='150px;'>";
+                $("#image").append(appd + " ");
+            }
+        }
+    }
+
     function demand(pageNo) {
         window.location.href="/dnshosts/showLog?pageNo="+pageNo;
     }

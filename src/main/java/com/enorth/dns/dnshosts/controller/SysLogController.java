@@ -7,6 +7,7 @@ package com.enorth.dns.dnshosts.controller;/*
 import com.enorth.dns.dnshosts.service.LogService;
 import com.enorth.dns.dnshosts.serviceImpl.LogServiceImpl;
 import com.enorth.dns.dnshosts.vo.Page;
+import com.enorth.dns.dnshosts.vo.base.PhotoVo;
 import com.enorth.dns.dnshosts.vo.sysLogVo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -37,6 +39,14 @@ public class SysLogController {
         page.setPageNo(Integer.valueOf(pageNo));
         page = this.logService.getAllLogs(page);
         request.setAttribute("page",page);
+        List<PhotoVo> list = this.logService.getPhotos();
+        request.setAttribute("photos",list);
         return "sysLog";
+    }
+
+    @RequestMapping(value = "/imgs",method = RequestMethod.POST)
+    public String imgSub(sysLogVo vo){
+        this.logService.insertPhoto(vo);
+        return "redirect:showLog";
     }
 }
