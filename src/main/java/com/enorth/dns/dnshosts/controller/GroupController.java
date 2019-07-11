@@ -255,9 +255,9 @@ public class GroupController {
             List<groupVo> listGroup = this.groupService.getAllGroup();
             boolean create=this.etcHostService.createHost(listGroup);
             if(create){
-                log.info("服务重启开始了");
+                System.out.println("================服务重启开始了"+System.nanoTime()+"===================");
 //                this.etcHostService.LinuxExe();
-                log.info("服务重启结束");
+                System.out.println("================服务重启结束"+System.nanoTime()+"======================");
             }
             json.put("code",1);
         } catch (Exception e) {
