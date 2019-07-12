@@ -149,6 +149,9 @@
                                 <li><a href="javascript:void(0);" onclick="demand('${page.pageNo+1}')">&raquo;</a></li>
                             </c:if>
                             <li><a href="javascript:void(0);" onclick="demand('${page.totalPage}')">&raquo;&raquo;</a></li>
+                            <li style="position: relative;top: 6px;left: 1em;">
+                                共${page.totalRecord}条记录,第${page.pageNo}/${page.totalPage}页,每页${page.pageSize}条
+                            </li>
                         </ul>
                     </div>
                 </div>

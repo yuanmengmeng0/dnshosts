@@ -114,6 +114,9 @@
                         <li><a href="javascript:void(0);" onclick="demand('${hosts.pageNo+1}')">&raquo;</a></li>
                     </c:if>
                     <li><a href="javascript:void(0);" onclick="demand('${hosts.totalPage}')">&raquo;&raquo;</a></li>
+                    <li style="position: relative;top: 6px;left: 1em;">
+                        共${hosts.totalRecord}条记录,第${hosts.pageNo}/${hosts.totalPage}页,每页${hosts.pageSize}条
+                    </li>
                 </ul>
             </div>
         </div>
