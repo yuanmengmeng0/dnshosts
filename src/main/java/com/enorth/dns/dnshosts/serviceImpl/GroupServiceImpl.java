@@ -12,6 +12,8 @@ import com.enorth.dns.dnshosts.vo.groupVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,11 +38,14 @@ public class GroupServiceImpl implements GroupService {
     /*查询所有*/
     @Override
     public List<groupVo> getAllGroup() throws Exception {
-        return groupDao.getAllGroup();
+        List<groupVo> list= new ArrayList<>();
+        list = this.groupDao.getAllGroup();
+        return list;
     }
     /*
     * 分页
     * */
+    @Cacheable(value = "emp")
     public Page<groupVo> getGroups(Page<groupVo> page) throws Exception {
         Page<groupVo> pages = new Page<>();
         List<groupVo> list = this.groupDao.getGroups(page);
