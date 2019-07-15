@@ -35,7 +35,9 @@ logging:
   path:
     config: classpath:log4j.properties
 
+#加解密
 jasypt:
   encryptor:
     algorithm: PBEWithMD5AndDES
     password: ljk
+
