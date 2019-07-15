@@ -91,6 +91,9 @@
                         上传图片
                     </sapn>
                 </div>
+                <div class="panel-body">
+                    <span id="ifr" style="cursor: pointer;margin-left: 1em;">iframe框架</span>
+                </div>
             </div>
         </div>
     </div>
@@ -173,6 +176,9 @@
                 <input type="submit" value="上传">
             </form>
         </div>
+        <div id="c" style="display: none;">
+            <iframe allowtransparency="true" frameborder="0" height="400" width="100%" src="showGroup" scrolling="yes" id="myFrame"></iframe>
+        </div>
     </div>
 </div>
 <script>
@@ -212,10 +218,17 @@
     $("#log").click(function () {
         $("#a").css("display","block");
         $("#b").css("display","none");
+        $("#c").css("display","none");
     });
     $("#back").click(function () {
         $("#b").css("display","block");
         $("#a").css("display","none");
+        $("#c").css("display","none");
+    })
+    $("#ifr").click(function () {
+        $("#b").css("display","none");
+        $("#a").css("display","none");
+        $("#c").css("display","block");
     })
 </script>
 </body>

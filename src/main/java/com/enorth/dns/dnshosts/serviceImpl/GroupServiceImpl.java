@@ -45,7 +45,7 @@ public class GroupServiceImpl implements GroupService {
     /*
     * 分页
     * */
-    @Cacheable(value = "emp")
+//    @Cacheable(value = "emp")
     public Page<groupVo> getGroups(Page<groupVo> page) throws Exception {
         Page<groupVo> pages = new Page<>();
         List<groupVo> list = this.groupDao.getGroups(page);
