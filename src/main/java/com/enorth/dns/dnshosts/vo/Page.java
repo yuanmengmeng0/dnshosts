@@ -1,6 +1,6 @@
 package com.enorth.dns.dnshosts.vo;/*
  * @author  Administrator
- * @description:
+ * @description:分页的
  * @date 2019/7/8
  * */
 
