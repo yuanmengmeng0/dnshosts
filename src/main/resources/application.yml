@@ -8,6 +8,10 @@ spring:
     username: root
     password: ENC(vEvXhHtMtKmJbsdQtTC4Pg==)
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
   mvc:
     static-path-pattern: /**
     view:
