@@ -4,7 +4,6 @@ package com.enorth.dns.dnshosts.controller;/*
  * @date 2019/7/17
  * */
 
-import cn.com.enorth.utility.AppBeans;
 import com.enorth.dns.dnshosts.consts.DBProgNameConst;
 import com.enorth.dns.dnshosts.consts.ParamConst;
 import com.enorth.dns.dnshosts.consts.SysParamInit;
@@ -12,10 +11,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class ApplicationTest implements ApplicationRunner {

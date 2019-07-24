@@ -37,7 +37,7 @@ public class GroupServiceImpl implements GroupService {
 
     /*查询所有*/
     @Override
-    @CachePut(value = "list")
+//    @CachePut(value = "list")
     public List<groupVo> getAllGroup() throws Exception {
         List<groupVo> list= new ArrayList<>();
         list = this.groupDao.getAllGroup();
