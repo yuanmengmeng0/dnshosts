@@ -6,6 +6,7 @@ import cn.com.enorth.utility.app.syslog.SysLogger;
 import com.enorth.dns.dnshosts.consts.DBProgNameConst;
 import com.enorth.dns.dnshosts.consts.ParamConst;
 
+
 /**
  * 登录用常量
  * Created by buce on 2017/5/18.
@@ -25,15 +26,17 @@ public class LoginConst {
 
     }
 
-//    public static String APP_ID = CKB.paramHelper().getString("dnshosts.app_id");
-//    public static String APP_SEED = CKB.paramHelper().getString("dnshosts.app_seed");  查询tsen_sys_param 表中的数据
+  /*  public static String APP_ID = CKB.paramHelper().getString("dnshosts.app_id");
+    public static String APP_SEED = CKB.paramHelper().getString("dnshosts.app_seed"); // 查询tsen_sys_param 表中的数据*/
     public static String APP_ID;
     public static String APP_SEED;
 
     static {
         try {
-            APP_ID = AppBeans.getGlobalUtil().getParamValue(DBProgNameConst.getPROGNAME(), "app_id");
-            APP_SEED = AppBeans.getGlobalUtil().getParamValue(DBProgNameConst.getPROGNAME(), "app_seed");
+           /* APP_ID = AppBeans.getGlobalUtil().getParamValue(DBProgNameConst.getPROGNAME(), "app_id");
+            APP_SEED = AppBeans.getGlobalUtil().getParamValue(DBProgNameConst.getPROGNAME(), "app_seed");*/
+            APP_ID = "a4ff1050-10b4-40c0-b904-71e5303de51f";
+            APP_SEED = "7fb194b1-3008-4cf8-9259-e31eb5a5a2ed";
         } catch (Exception e) {
             e.printStackTrace();
         }

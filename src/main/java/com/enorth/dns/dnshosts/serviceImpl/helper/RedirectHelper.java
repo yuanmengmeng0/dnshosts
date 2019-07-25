@@ -38,7 +38,8 @@ public class RedirectHelper {
         StringBuilder redirectUrl = new StringBuilder(projectPath);
         relaystate = StringUtils.isEmpty(relaystate) ? LoginConst.APP_ID : relaystate;
         if (LoginConst.APP_ID.equals(relaystate)) {
-            redirectUrl.append("main/redirectAction!main.do");
+//            redirectUrl.append("main/redirectAction!main.do");
+            redirectUrl.append("showGroup");
         }
         return redirectUrl.toString();
     }
