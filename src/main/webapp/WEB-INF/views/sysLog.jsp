@@ -83,15 +83,15 @@
                 </h4>
             </div>
             <div id="collapseOne" class="panel-collapse collapse in">
-                <div class="panel-body">
+                <div class="panel-body p1" onclick="bcolor(1);">
                    <span id="log" style="cursor: pointer;margin-left: 1em;">日志列表</span>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body p2"  onclick="bcolor(2);">
                     <sapn id="back" style="cursor: pointer;margin-left: 1em;">
                         上传图片
                     </sapn>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body p3"  onclick="bcolor(3);">
                     <span id="ifr" style="cursor: pointer;margin-left: 1em;">iframe框架</span>
                 </div>
             </div>
@@ -215,6 +215,20 @@
     function demand(pageNo) {
         window.location.href="/dnshosts/showLog?pageNo="+pageNo;
     }
+
+    function bcolor(num){
+
+        for(var i=1;i<4;i++){
+            var j=".p"+i;
+            if(i == num){
+                $(j).css("background-color","yellow");
+            }else{
+                $(j).css("background-color","white");
+            }
+
+        }
+    }
+
     $("#log").click(function () {
         $("#a").css("display","block");
         $("#b").css("display","none");
