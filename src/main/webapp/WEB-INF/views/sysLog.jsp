@@ -91,6 +91,11 @@
                         上传图片
                     </sapn>
                 </div>
+                <div class="panel-body p4"  onclick="bcolor(4);">
+                    <sapn id="word" style="cursor: pointer;margin-left: 1em;">
+                        上传word、excel等
+                    </sapn>
+                </div>
                 <div class="panel-body p3"  onclick="bcolor(3);">
                     <span id="ifr" style="cursor: pointer;margin-left: 1em;">iframe框架</span>
                 </div>
@@ -176,6 +181,12 @@
                 <input type="submit" value="上传">
             </form>
         </div>
+        <div id="d" style="display: none">
+            <form method="post" action="/dnshosts/word">
+                <input type="file" onchange="change(this);"  multiple="multiple" value="上传word">
+                <input type="submit" value="上传">
+            </form>
+        </div>
         <div id="c" style="display: none;">
             <iframe allowtransparency="true" frameborder="0" height="400" width="100%" src="showGroup" scrolling="yes" id="myFrame"></iframe>
         </div>
@@ -218,7 +229,7 @@
 
     function bcolor(num){
 
-        for(var i=1;i<4;i++){
+        for(var i=1;i<5;i++){
             var j=".p"+i;
             if(i == num){
                 $(j).css("background-color","yellow");
@@ -233,16 +244,25 @@
         $("#a").css("display","block");
         $("#b").css("display","none");
         $("#c").css("display","none");
+        $("#d").css("display","none");
     });
     $("#back").click(function () {
         $("#b").css("display","block");
         $("#a").css("display","none");
         $("#c").css("display","none");
+        $("#d").css("display","none");
     })
     $("#ifr").click(function () {
         $("#b").css("display","none");
         $("#a").css("display","none");
         $("#c").css("display","block");
+        $("#d").css("display","none");
+    });
+    $("#word").click(function () {
+        $("#d").css("display","block");
+        $("#b").css("display","none");
+        $("#a").css("display","none");
+        $("#c").css("display","none");
     })
 </script>
 </body>
